@@ -4,6 +4,13 @@
 #include <stdlib.h> //* Memory managing and type exchange
 #include <string.h> //* String manipulation and managing
 
+/*
+TODO:
+* Clean up
+* Clarify some variable names
+* Optimize code
+*/
+
 //* Prototypes
 // Determines if the database is found
 char *get_database_name();
@@ -47,16 +54,6 @@ void show_specific_by_username_menu(int line_count, char *db_name);
 // Looks for name and if found returns its key value
 int found_name(char name[], int line_count, char *db_name);
 
-/*
-TODO:
-* Comment and document code
-* Clean up
-* Clarify some variable names
-* Optimize code
-* Handle memory better
-* Handle database name
-*/
-
 //* Functionality
 
 int main(void) {
@@ -73,6 +70,7 @@ int main(void) {
   // Print main menu
   main_menu(lines, name);
 
+  free(name);
   return 0;
 }
 
@@ -91,7 +89,7 @@ char *get_database_name() {
   printf("\nIntroduce the name of the database: ");
   scanf("%s", db_name);
 
-  realloc(db_name, strlen(db_name) * sizeof(char));
+  db_name = realloc(db_name, strlen(db_name) * sizeof(char));
 
   file = fopen(db_name, "r");
 
@@ -231,10 +229,9 @@ int find_last_key(int line_count, char *db_name) {
 void append_new(int line_count, char *db_name) {
   // Variables
   int key = find_last_key(line_count, db_name);
-  const int MAX_INPUT_SIZE = 30;
 
-  char username[MAX_INPUT_SIZE];
-  char password[MAX_INPUT_SIZE];
+  char *username = malloc(30 * sizeof(char));
+  char *password = malloc(30 * sizeof(char));
 
   FILE *file;
 
@@ -248,9 +245,11 @@ void append_new(int line_count, char *db_name) {
 
   printf("~~Username must be 6-30 characters long~~ \n");
   printf("Introduce username: ");
-  scanf("%s", &username);
+  scanf("%s", username);
 
-  if (strlen(username) <= 6 || strlen(username) >= 30) {
+  username = realloc(username, (strlen(username) + 1) * sizeof(char));
+
+  if (strlen(username) < 6 || strlen(username) > 30) {
     printf("\n Username is to short or too long, must be 6-30 characters \n");
     return;
   }
@@ -259,9 +258,11 @@ void append_new(int line_count, char *db_name) {
 
   printf("~~Password must be 6-30 characters long~~ \n");
   printf("Introduce password: ");
-  scanf("%s", &password);
+  scanf("%s", password);
 
-  if (strlen(password) <= 6 || strlen(password) >= 30) {
+  password = realloc(password, (strlen(password) + 1) * sizeof(char));
+
+  if (strlen(password) < 6 || strlen(password) > 30) {
     printf("\n Username is to short or too long, must be 6-30 characters \n");
     return;
   }
@@ -273,6 +274,8 @@ void append_new(int line_count, char *db_name) {
   printf("\nPassword: %s", password);
   printf("\n");
 
+  free(username);
+  free(password);
   fclose(file);
 }
 
@@ -368,12 +371,12 @@ void show_specific_by_key_menu(int line_count, char *db_name) {
   case 4:
     printf("\nPassword:");
     show_password_by_key(key, db_name);
-		break;
+    break;
 
-	default:
-		printf("This is not a showable field");
-		break;
-	}
+  default:
+    printf("This is not a showable field");
+    break;
+  }
 }
 
 // Shows all Data in a line with the same key value
@@ -522,7 +525,7 @@ void show_password_by_key(int key_value, char *db_name) {
 void show_specific_by_username_menu(int line_count, char *db_name) {
   // Variables
   int selection;
-  char name[30];
+  char *name = malloc(30 * sizeof(char));
 
   // Functionality: Specific search by username
   printf("\n");
@@ -537,7 +540,9 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
 
   printf("\n");
   printf("Introduce the name to search for: ");
-  scanf("%s", &name);
+  scanf("%s", name);
+
+  realloc(name, (strlen(name) + 1) * sizeof(char));
 
   int found_name_key = found_name(name, line_count, db_name);
 
@@ -573,6 +578,7 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
     break;
   }
 
+  free(name);
   return;
 }
 
