@@ -22,10 +22,10 @@ At the moment I am for all intensive purposes unsure, I will keep developing it 
 If you wish to run this,(Honestly don't know why you would), you should know some important details, currently there are 2 branches of the repo, **Main** and **Development**, besides the names whats the difference:
 
 1. **Stability**:
-Currently Main is the only stable build I have, while development is currently currently and incredibly unstable and is probable to change in its life time.
+Currently Main is the only stable build I have, while development is currently incredibly unstable and is probable to change in its life time.
 
 2. **Features**:
-The current features in Main are simplistic and are the first to be developed meaning they're out of date. Mean while development has some of the most recent features.
+The current features in Main are simplistic and are the first to be developed meaning they're out of date. Mean while development has some of the most recent features, with the downside that it can change at any moment as said before.
 
 Knowing that in case you choose to try one out what should you keep in mind. In the first place the main branch only allows the use of a file called **"basicdatabase.txt"** as its storage, and it mus have the following text in the first line:
 
@@ -42,7 +42,7 @@ Some of these are just ideas and I'm unsure if they are currently possible with 
 - Custom fields
 - Database, tables and relations
 - Custom field searching
-_ Better CLI looks
+- Better CLI looks
 
 ### Changelogs
 
