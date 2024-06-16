@@ -4,37 +4,48 @@
 #include <stdlib.h> //* Memory managing and type exchange
 #include <string.h> //* String manipulation and managing
 
-// Prototypes
-//* Count the cuantity of lines in the file
-int line_count();
-//* Finds the last key registered
-int find_last_key(int line_count);
+//* Prototypes
+// Determines if the database is found
+char *get_database_name();
 
-//* Prints out the main menu
-void main_menu(int line_count);
+// Count the quantity of lines in the file
+int line_count(char *db_name);
 
-//* Appends new data into the database
-void append_new(int line_count);
-//* Reads and prints out all lines stored in the database
-void show_all();
-//* Opens menu for specific data selection based on a field
-void show_specific_menu(int line_count);
+// Finds the last key registered
+int find_last_key(int line_count, char *db_name);
 
-//* Opens a menu to select fields based on the key of the register
-void show_specific_by_key_menu(int line_count);
-//* Shows all Data in a line with the same key value
-void show_all_by_key(int key_value);
-//* Shows only the username in a line with the same key value
-void show_username_by_key(int key_value);
-//* Shows the username and password in a line with the same key value
-void show_username_and_password_by_key(int key_value);
-//* Show only the password in a line with the same key value
-void show_password_by_key(int key_value);
+// Prints out the main menu
+void main_menu(int line_count, char *db_name);
 
-//* Opens a menu to select fieleds based on the username of the register
-void show_specific_by_username_menu(int line_count);
-//* Looks for name and if found returns its key value
-int found_name(char name[], int line_count);
+// Appends new data into the database
+void append_new(int line_count, char *db_name);
+
+// Reads and prints out all lines stored in the database
+void show_all(char *db_name);
+
+// Opens menu for specific data selection based on a field
+void show_specific_menu(int line_count, char *db_name);
+
+// Opens a menu to select fields based on the key of the register
+void show_specific_by_key_menu(int line_count, char *db_name);
+
+// Shows all Data in a line with the same key value
+void show_all_by_key(int key_value, char *db_name);
+
+// Shows only the username in a line with the same key value
+void show_username_by_key(int key_value, char *db_name);
+
+// Shows the username and password in a line with the same key value
+void show_username_and_password_by_key(int key_value, char *db_name);
+
+// Show only the password in a line with the same key value
+void show_password_by_key(int key_value, char *db_name);
+
+// Opens a menu to select fields based on the username of the register
+void show_specific_by_username_menu(int line_count, char *db_name);
+
+// Looks for name and if found returns its key value
+int found_name(char name[], int line_count, char *db_name);
 
 /*
 TODO:
@@ -43,20 +54,81 @@ TODO:
 * Clarify some variable names
 * Optimize code
 * Handle memory better
+* Handle database name
 */
 
-int main(void) {
+//* Functionality
 
+int main(void) {
   // Variables
-  int lines = line_count();
+  char *name = get_database_name();
+
+  if (name == NULL)
+    return 0;
+
+  printf("\nDatabase name is: %s \n", name);
+
+  int lines = line_count(name);
 
   // Print main menu
-  main_menu(lines);
+  main_menu(lines, name);
 
   return 0;
 }
 
-int line_count() {
+// Determines if the database is found
+char *get_database_name() {
+  // Variables
+  char select;
+
+  char *db_name = malloc(30 * sizeof(char));
+  char f_ext[5] = ".txt";
+
+  FILE *file;
+
+  // Functionality: determine if the file exist
+  printf("\nName must contain the \".txt\" extension\n");
+  printf("\nIntroduce the name of the database: ");
+  scanf("%s", db_name);
+
+  realloc(db_name, strlen(db_name) * sizeof(char));
+
+  file = fopen(db_name, "r");
+
+  if (file == NULL) {
+    fclose(file);
+    printf("This is file does not exist would you like to create it? \n");
+    printf("(y)es (n)o: ");
+    scanf(" %c", &select);
+
+    if (tolower(select) == 'n') {
+      printf("Understood system will close\n");
+      free(db_name);
+      return NULL;
+    } else if (tolower(select) == 'y') {
+      printf("Understood file will be create and fields will be inserted \n");
+
+      file = fopen(db_name, "w");
+
+      fprintf(file, "Key, User, Password");
+
+      fclose(file);
+
+      return db_name;
+    } else {
+      printf("This is not a valid option please try again! \n");
+      free(db_name);
+      return NULL;
+    }
+  }
+
+  printf("\nDatabase found! \n");
+  fclose(file);
+  return db_name;
+}
+
+// Count the quantity of lines in the file
+int line_count(char *db_name) {
   // Variables
   int lines = 0;
   char ch;
@@ -64,7 +136,7 @@ int line_count() {
   FILE *file;
 
   // Functionality: Loops through text file to find lines
-  file = fopen("basicdatabase.txt", "r");
+  file = fopen(db_name, "r");
 
   while ((ch = fgetc(file)) != EOF) {
     if (ch == '\n')
@@ -76,8 +148,9 @@ int line_count() {
   return lines;
 }
 
-void main_menu(int line_count) {
-  // Varibles
+// Prints out the main menu
+void main_menu(int line_count, char *db_name) {
+  // Variables
   int selection; // Menu selection
 
   // Functionality
@@ -88,22 +161,27 @@ void main_menu(int line_count) {
   printf("\n 1.Append new");
   printf("\n 2.Read all");
   printf("\n 3.Read specific");
+  printf("\n 4.Close system");
   printf("\n: ");
   scanf("%i", &selection);
   printf("\n");
 
   switch (selection) {
   case 1:
-    append_new(line_count);
+    append_new(line_count, db_name);
     break;
 
   case 2:
-    show_all();
+    show_all(db_name);
     break;
 
   case 3:
-    show_specific_menu(line_count);
+    show_specific_menu(line_count, db_name);
     break;
+
+  case 4:
+    printf("Understood closing system!\n");
+    return;
 
   default:
     printf("\nNot a valid option \n");
@@ -111,7 +189,8 @@ void main_menu(int line_count) {
   }
 }
 
-int find_last_key(int line_count) {
+// Finds the last key registered
+int find_last_key(int line_count, char *db_name) {
   // Variables
   int count = 0;
   int x_size = 1;
@@ -122,8 +201,8 @@ int find_last_key(int line_count) {
 
   FILE *file;
 
-  // Functionality: Find the last key to set next optimaly
-  file = fopen("basicdatabase.txt", "r");
+  // Functionality: Find the last key to set next optimally
+  file = fopen(db_name, "r");
 
   while ((ch = fgetc(file)) != EOF) {
     if (ch == '\n')
@@ -148,9 +227,10 @@ int find_last_key(int line_count) {
   return key;
 }
 
-void append_new(int line_count) {
+// Appends new data into the database
+void append_new(int line_count, char *db_name) {
   // Variables
-  int key = find_last_key(line_count);
+  int key = find_last_key(line_count, db_name);
   const int MAX_INPUT_SIZE = 30;
 
   char username[MAX_INPUT_SIZE];
@@ -159,7 +239,7 @@ void append_new(int line_count) {
   FILE *file;
 
   // Functionality: Append new data to the database
-  file = fopen("basicdatabase.txt", "a");
+  file = fopen(db_name, "a");
 
   if (line_count == 1)
     key = 0;
@@ -170,16 +250,18 @@ void append_new(int line_count) {
   printf("Introduce username: ");
   scanf("%s", &username);
 
-  if ((strlen(username) - 1) <= 6 || (strlen(username) - 1) >= 30) {
+  if (strlen(username) <= 6 || strlen(username) >= 30) {
     printf("\n Username is to short or too long, must be 6-30 characters \n");
     return;
   }
+
+  printf("\n\n");
 
   printf("~~Password must be 6-30 characters long~~ \n");
   printf("Introduce password: ");
   scanf("%s", &password);
 
-  if ((strlen(password) - 1) <= 6 || (strlen(password) - 1) >= 30) {
+  if (strlen(password) <= 6 || strlen(password) >= 30) {
     printf("\n Username is to short or too long, must be 6-30 characters \n");
     return;
   }
@@ -194,14 +276,15 @@ void append_new(int line_count) {
   fclose(file);
 }
 
-void show_all() {
+// Reads and prints out all lines stored in the database
+void show_all(char *db_name) {
   // Variables
   char line[70];
 
   FILE *file;
 
   // Functionality: Read all the contents of DB
-  file = fopen("basicdatabase.txt", "r");
+  file = fopen(db_name, "r");
 
   printf("Database content: \n");
   while (fgets(line, 70, file)) {
@@ -210,7 +293,9 @@ void show_all() {
 
   fclose(file);
 }
-void show_specific_menu(int line_count) {
+
+// Opens menu for specific data selection based on a field
+void show_specific_menu(int line_count, char *db_name) {
   // Variables
   int selection;
 
@@ -225,11 +310,11 @@ void show_specific_menu(int line_count) {
 
   switch (selection) {
   case 1:
-    show_specific_by_key_menu(line_count);
+    show_specific_by_key_menu(line_count, db_name);
     break;
 
   case 2:
-    show_specific_by_username_menu(line_count);
+    show_specific_by_username_menu(line_count, db_name);
     break;
 
   default:
@@ -238,11 +323,12 @@ void show_specific_menu(int line_count) {
   }
 }
 
-void show_specific_by_key_menu(int line_count) {
+// Opens a menu to select fields based on the key of the register
+void show_specific_by_key_menu(int line_count, char *db_name) {
   // Variables
   int selection;
   int key;
-  int lastkey = find_last_key(line_count);
+  int lastkey = find_last_key(line_count, db_name);
 
   // Functionality: Menu for specific search by key
   printf("\n");
@@ -266,32 +352,33 @@ void show_specific_by_key_menu(int line_count) {
   switch (selection) {
   case 1:
     printf("\nAll: ");
-    show_all_by_key(key);
+    show_all_by_key(key, db_name);
     break;
 
   case 2:
     printf("\nName:");
-    show_username_by_key(key);
+    show_username_by_key(key, db_name);
     break;
 
   case 3:
     printf("\nName & Password:");
-    show_username_and_password_by_key(key);
+    show_username_and_password_by_key(key, db_name);
     break;
 
   case 4:
     printf("\nPassword:");
-    show_password_by_key(key);
-    break;
+    show_password_by_key(key, db_name);
+		break;
 
-  default:
-    printf("This is not a showable field");
-    break;
-  }
+	default:
+		printf("This is not a showable field");
+		break;
+	}
 }
 
-void show_all_by_key(int key_value) {
-  // Varibales
+// Shows all Data in a line with the same key value
+void show_all_by_key(int key_value, char *db_name) {
+  // Variables
   int count = 0;
 
   char line[70];
@@ -299,7 +386,7 @@ void show_all_by_key(int key_value) {
   FILE *file;
 
   // Functionality: Print all in line where key is
-  file = fopen("basicdatabase.txt", "r");
+  file = fopen(db_name, "r");
 
   while (fgets(line, 1000, file)) {
     count++;
@@ -310,7 +397,8 @@ void show_all_by_key(int key_value) {
   fclose(file);
 }
 
-void show_username_by_key(int key_value) {
+// Shows only the username in a line with the same key value
+void show_username_by_key(int key_value, char *db_name) {
   // Variables
   int count = 0;
   int ic = 0;
@@ -322,7 +410,7 @@ void show_username_by_key(int key_value) {
 
   FILE *file;
 
-  file = fopen("basicdatabase.txt", "r");
+  file = fopen(db_name, "r");
 
   while (fgets(line, 1000, file)) {
     count++;
@@ -349,7 +437,8 @@ void show_username_by_key(int key_value) {
   fclose(file);
 }
 
-void show_username_and_password_by_key(int key_value) {
+// Shows the username and password in a line with the same key value
+void show_username_and_password_by_key(int key_value, char *db_name) {
   // Variables
   int count = 0;
   int ic = 0;
@@ -361,7 +450,7 @@ void show_username_and_password_by_key(int key_value) {
 
   FILE *file;
 
-  file = fopen("basicdatabase.txt", "r");
+  file = fopen(db_name, "r");
 
   while (fgets(line, 1000, file)) {
     count++;
@@ -388,7 +477,8 @@ void show_username_and_password_by_key(int key_value) {
   fclose(file);
 }
 
-void show_password_by_key(int key_value) {
+// Show only the password in a line with the same key value
+void show_password_by_key(int key_value, char *db_name) {
   // Variables
   int count = 0;
   int ic = 0;
@@ -400,7 +490,7 @@ void show_password_by_key(int key_value) {
 
   FILE *file;
 
-  file = fopen("basicdatabase.txt", "r");
+  file = fopen(db_name, "r");
 
   while (fgets(line, 1000, file)) {
     count++;
@@ -428,7 +518,8 @@ void show_password_by_key(int key_value) {
   fclose(file);
 }
 
-void show_specific_by_username_menu(int line_count) {
+// Opens a menu to select fields based on the username of the register
+void show_specific_by_username_menu(int line_count, char *db_name) {
   // Variables
   int selection;
   char name[30];
@@ -448,7 +539,7 @@ void show_specific_by_username_menu(int line_count) {
   printf("Introduce the name to search for: ");
   scanf("%s", &name);
 
-  int found_name_key = found_name(name, line_count);
+  int found_name_key = found_name(name, line_count, db_name);
 
   if (found_name_key == -1) {
     printf("\nName %s was not found\n", name);
@@ -458,7 +549,7 @@ void show_specific_by_username_menu(int line_count) {
   switch (selection) {
   case 1:
     printf("\nAll: ");
-    show_all_by_key(found_name_key);
+    show_all_by_key(found_name_key, db_name);
     break;
 
   case 2:
@@ -467,13 +558,13 @@ void show_specific_by_username_menu(int line_count) {
 
   case 3:
     printf("\nKey & Password: %i,", found_name_key);
-    show_password_by_key(found_name_key);
+    show_password_by_key(found_name_key, db_name);
     printf("\n");
     break;
 
   case 4:
     printf("\nPassword:");
-    show_password_by_key(found_name_key);
+    show_password_by_key(found_name_key, db_name);
     printf("\n");
     break;
 
@@ -485,7 +576,8 @@ void show_specific_by_username_menu(int line_count) {
   return;
 }
 
-int found_name(char name[], int line_count) {
+// Looks for name and if found returns its key value
+int found_name(char name[], int line_count, char *db_name) {
   // Variables
   int spacecount = 0;
   int cc = 0;
@@ -498,7 +590,7 @@ int found_name(char name[], int line_count) {
 
   FILE *file;
 
-  file = fopen("basicdatabase.txt", "r");
+  file = fopen(db_name, "r");
 
   while (fgets(line, 70, file) != NULL) {
     if (counter + 1 == line_count)
