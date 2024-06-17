@@ -3,6 +3,8 @@
 
 > I know I'm bad at names no need to mention it
 
+## **If you're reading this it means that you're in the Main Branch**
+
 ## **Do note this is only a mvp, and not meant for implementation**
 
 ### What is this project
