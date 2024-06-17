@@ -48,7 +48,19 @@ Some of these are just ideas and I'm unsure if they are currently possible with 
 
 ### Changelogs
 
-To be updated... (Might Depend on the branch)
+- [`60f2587`](https://github.com/EfrenDaMo/DatabaseProyect/commit/60f2587b0c327275453a27d4aa31521f46be6a09) Created repo, programmed in a basic database, finished up the project
+
+- [`ffcab19`](https://github.com/EfrenDaMo/DatabaseProyect/commit/ffcab193b9987b3c0274506430f9dcfdc09fddfa) Created README.md
+
+- [`16584e9`](https://github.com/EfrenDaMo/DatabaseProyect/commit/16584e9edb9988ee6f7c2a346de138fb9b9992f3) .gitignore changes
+
+- [`528f124`](https://github.com/EfrenDaMo/DatabaseProyect/commit/528f124e10870a99adb1056c4c3cbd50d8d84110) Updated README.md to read any important data about the project.
+
+- [`37e9f93`](https://github.com/EfrenDaMo/DatabaseProyect/commit/37e9f93b069262e1e31591ba7b3f8ece532ba02f) Update README.md
+
+- [`9429655`](https://github.com/EfrenDaMo/DatabaseProyect/commit/9429655b50a7cb8aae692b68627bc0a4a97a5242) Minor readme change
+
+- `Current` Added changelog (Even if this one wont be consistently updated).
 
 ### Thanks && other stuff
 
