@@ -47,13 +47,21 @@ Some of these are just ideas and I'm unsure if they are currently possible with 
 
 ### Changelogs
 
-*[`60f2587`](https://github.com/EfrenDaMo/DatabaseProyect/commit/60f2587b0c327275453a27d4aa31521f46be6a09) Created repo, programmed in a basic database, finished up the project
-*[`9274cee`](https://github.com/EfrenDaMo/DatabaseProyect/commit/9274ceec72b11ca8b42180086ad14aafd6e1c7b5) Made minor changes toward commentating the code
-*[`f33e082`](https://github.com/EfrenDaMo/DatabaseProyect/commit/f33e082e987a0b235268d41b03a74a76ef7ae8ac) Made it possible to open databases by now, added comments to functions, other minor changes
-*[`b6452a3`](https://github.com/EfrenDaMo/DatabaseProyect/commit/b6452a37e8fda66f6498da95e7c9f41465aaf654) Cleaned up minor issues, and cleaned up memory management
-*[`fe1d018`](https://github.com/EfrenDaMo/DatabaseProyect/commit/fe1d0186ab3f42d3e837f60e6cc877a9454b56d1) Cleaned up code, made variables easier to understand, optimized some other of possible memory issues
-*[`3aa5cdf`](https://github.com/EfrenDaMo/DatabaseProyect/commit/3aa5cdf3ef44478f88c94dcf6576d81fba16f36e) Created README.md for the Dev Branch
-*`Current` Added changelog to the ReadMe
+- [`60f2587`](https://github.com/EfrenDaMo/DatabaseProyect/commit/60f2587b0c327275453a27d4aa31521f46be6a09) Created repo, programmed in a basic database, finished up the project
+
+- [`9274cee`](https://github.com/EfrenDaMo/DatabaseProyect/commit/9274ceec72b11ca8b42180086ad14aafd6e1c7b5) Made minor changes toward commentating the code
+
+- [`f33e082`](https://github.com/EfrenDaMo/DatabaseProyect/commit/f33e082e987a0b235268d41b03a74a76ef7ae8ac) Made it possible to open databases by now, added comments to functions, other minor changes
+
+- [`b6452a3`](https://github.com/EfrenDaMo/DatabaseProyect/commit/b6452a37e8fda66f6498da95e7c9f41465aaf654) Cleaned up minor issues, and cleaned up memory management
+
+- [`fe1d018`](https://github.com/EfrenDaMo/DatabaseProyect/commit/fe1d0186ab3f42d3e837f60e6cc877a9454b56d1) Cleaned up code, made variables easier to understand, optimized some other of possible memory issues
+
+- [`3aa5cdf`](https://github.com/EfrenDaMo/DatabaseProyect/commit/3aa5cdf3ef44478f88c94dcf6576d81fba16f36e) Created README.md for the Dev Branch
+
+- [`05542fe`](https://github.com/EfrenDaMo/DatabaseProyect/commit/05542fe19742b971e582a44a3110cb1ee9812d82) Added changelog to the ReadMe
+
+- `Current` Made changes to fix mistake is changelog in ReadMe
 
 ### Thanks && other stuff
 
