@@ -61,7 +61,9 @@ Some of these are just ideas and I'm unsure if they are currently possible with 
 
 - [`05542fe`](https://github.com/EfrenDaMo/DatabaseProyect/commit/05542fe19742b971e582a44a3110cb1ee9812d82) Added changelog to the ReadMe
 
-- `Current` Made changes to fix mistake is changelog in ReadMe
+- [`e99e775`](https://github.com/EfrenDaMo/DatabaseProyect/commit/e99e775d002bcd4daf0cfead9a47a9e9b9b611a0) Made changes to fix mistake is changelog in ReadMe
+
+- `Current` Added screen clearing every time a new operation is done
 
 ### Thanks && other stuff
 

@@ -6,6 +6,14 @@
 
 /*
 TODO:
+* Custom Fields
+* Databases, tables and relations
+* Custom field searching
+*- Better CLI looks:
+*-  - Clear screen
+*   - Return to previous menus
+*   - Run timer
+*   - Database selector
 */
 
 //* Prototypes
@@ -55,19 +63,21 @@ int found_name(char name[], int line_count, char *db_name);
 
 int main(void) {
   // Variables
-  char *name = get_database_name();
+  char *db_name = get_database_name();
 
-  if (name == NULL)
+  if (db_name == NULL)
     return 0;
 
-  printf("\nDatabase name is: %s \n", name);
+  system("cls");
+  printf("\nDatabase name is: %s \n", db_name);
 
-  int lines_count = get_line_count(name);
+  int lines_count = get_line_count(db_name);
 
   // Print main menu
-  main_menu(lines_count, name);
+  printf("\n~~~~~Welcome~~~~~\n");
+  main_menu(lines_count, db_name);
 
-  free(name);
+  free(db_name);
   return 0;
 }
 
@@ -80,7 +90,7 @@ char *get_database_name() {
   FILE *database;
 
   // Functionality: determine if the file exist
-  printf("\nName must contain the \".txt\" extension\n");
+  printf("\nName must contain the \".txt\" extension!\n");
   printf("\nIntroduce the name of the database: ");
   scanf("%s", db_name);
 
@@ -96,6 +106,7 @@ char *get_database_name() {
 
     if (tolower(select) == 'n') {
       printf("Understood system will close\n");
+
       free(db_name);
       return NULL;
     } else if (tolower(select) == 'y') {
@@ -106,16 +117,18 @@ char *get_database_name() {
       fprintf(database, "Key, User, Password");
 
       fclose(database);
-
       return db_name;
     } else {
       printf("This is not a valid option please try again! \n");
+
       free(db_name);
+      fclose(database);
       return NULL;
     }
   }
 
   printf("\nDatabase found! \n");
+
   fclose(database);
   return db_name;
 }
@@ -148,9 +161,6 @@ void main_menu(int line_count, char *db_name) {
   int selection; // Menu selection
 
   // Functionality
-  printf("\n");
-  printf("Welcome to database: ");
-  printf("\n");
   printf("\nSelect one of the following options: ");
   printf("\n 1.Append new");
   printf("\n 2.Read all");
@@ -162,22 +172,29 @@ void main_menu(int line_count, char *db_name) {
 
   switch (selection) {
   case 1:
+    system("cls");
     append_new(line_count, db_name);
     break;
 
   case 2:
+    system("cls");
     show_all(db_name);
     break;
 
   case 3:
+    system("cls");
     show_specific_menu(line_count, db_name);
     break;
 
   case 4:
-    printf("Understood closing system!\n");
-    return;
+    system("cls");
+  	printf("\nDatabase name is: %s \n", db_name);
+    printf("\nUnderstood closing system!\n");
+    break;
 
   default:
+    system("cls");
+  	printf("\nDatabase name is: %s \n", db_name);
     printf("\nNot a valid option \n");
     break;
   }
@@ -200,7 +217,7 @@ int find_last_key_value(int line_count, char *db_name) {
   // Functionality: Find the last key to set next optimally
   database = fopen(db_name, "r");
 
-  while ((character = fgetc(database))!= EOF) {
+  while ((character = fgetc(database)) != EOF) {
     if (character == '\n')
       line_counter++;
 
@@ -219,7 +236,6 @@ int find_last_key_value(int line_count, char *db_name) {
 
   fclose(database);
   free(key);
-
   return key_value;
 }
 
@@ -242,16 +258,18 @@ void append_new(int line_count, char *db_name) {
   else
     key++;
 
-  printf("~~Username must be 6-30 characters long~~ \n");
+  printf("\nDatabase name is: %s \n", db_name);
+
+  printf("\n~~Username must be 6-30 characters long~~ \n");
   printf("Introduce username: ");
   scanf("%s", username);
 
   username = realloc(username, (strlen(username) + 1) * sizeof(char));
   name_check = found_name(username, line_count, db_name);
 
-  if(name_check != -1) {
-      printf("\n This username is already in system, please pick a new one \n");
-      return;
+  if (name_check != -1) {
+    printf("\n This username is already in system, please pick a new one \n");
+    return;
   }
 
   if (strlen(username) < 6 || strlen(username) > 30) {
@@ -295,7 +313,9 @@ void show_all(char *db_name) {
   // Functionality: Read all the contents of DB
   database = fopen(db_name, "r");
 
-  printf("Database content: \n");
+  printf("\nDatabase name is: %s \n", db_name);
+
+  printf("\nDatabase content: \n");
   while (fgets(line, 70, database)) {
     printf(" %s", line);
   }
@@ -310,6 +330,8 @@ void show_specific_menu(int line_count, char *db_name) {
   int selection;
 
   // functionality: Handle menu for specific selection fields
+  printf("\nDatabase name is: %s \n", db_name);
+
   printf("\n");
   printf("What field to you wish to select by: ");
   printf("\n 1.Key");
@@ -320,14 +342,17 @@ void show_specific_menu(int line_count, char *db_name) {
 
   switch (selection) {
   case 1:
+    system("cls");
     show_specific_by_key_menu(line_count, db_name);
     break;
 
   case 2:
+    system("cls");
     show_specific_by_username_menu(line_count, db_name);
     break;
 
   default:
+    system("cls");
     printf("This is not a selectable field");
     break;
   }
@@ -343,6 +368,8 @@ void show_specific_by_key_menu(int line_count, char *db_name) {
   int last_key_value = find_last_key_value(line_count, db_name);
 
   // Functionality: Menu for specific search by key
+  printf("\nDatabase name is: %s \n", db_name);
+
   printf("\n");
   printf("What field should be shown: ");
   printf("\n 1.All");
@@ -363,27 +390,37 @@ void show_specific_by_key_menu(int line_count, char *db_name) {
 
   switch (selection) {
   case 1:
+	system("cls");
+  	printf("\nDatabase name is: %s \n", db_name);
     printf("\nAll: ");
     show_all_by_key(key_value, db_name);
     break;
 
   case 2:
+  	system("cls");
+  	printf("\nDatabase name is: %s \n", db_name);
     printf("\nName:");
     show_username_by_key(key_value, db_name);
     break;
 
   case 3:
+	system("cls");
+  	printf("\nDatabase name is: %s \n", db_name);
     printf("\nName & Password:");
     show_username_and_password_by_key(key_value, db_name);
     break;
 
   case 4:
+	system("cls");
+  	printf("\nDatabase name is: %s \n", db_name);
     printf("\nPassword:");
     show_password_by_key(key_value, db_name);
     break;
 
   default:
-    printf("This is not a showable field");
+  	system("cls");
+  	printf("\nDatabase name is: %s \n", db_name);
+    printf("\nThis is not a showable field");
     break;
   }
 
@@ -478,7 +515,7 @@ void show_username_and_password_by_key(int key_value, char *db_name) {
 
         if (space_counter > 0)
           printf("%c", character);
-        
+
         current_index++;
       }
     }
@@ -534,7 +571,8 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
   char *username = malloc(30 * sizeof(char));
 
   // Functionality: Specific search by username
-  printf("\n");
+  printf("\nDatabase name is: %s \n", db_name);
+	printf("\n");
   printf("What field should be shown: ");
   printf("\n 1.All");
   printf("\n 2.Key");
@@ -559,27 +597,37 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
 
   switch (selection) {
   case 1:
+  	system("cls");
+  	printf("\nDatabase name is: %s \n", db_name);
     printf("\nAll: ");
     show_all_by_key(found_name_key, db_name);
     break;
 
   case 2:
+  	system("cls");
+  	printf("\nDatabase name is: %s \n", db_name);
     printf("\nKey: %i\n", found_name_key);
     break;
 
   case 3:
+  	system("cls");
+  	printf("\nDatabase name is: %s \n", db_name);
     printf("\nKey & Password: %i,", found_name_key);
     show_password_by_key(found_name_key, db_name);
     printf("\n");
     break;
 
   case 4:
+  	system("cls");
+  	printf("\nDatabase name is: %s \n", db_name);
     printf("\nPassword:");
     show_password_by_key(found_name_key, db_name);
     printf("\n");
     break;
 
   default:
+  	system("cls");
+  	printf("\nDatabase name is: %s \n", db_name);
     printf("\nNot a valid option \n");
     break;
   }
@@ -642,4 +690,3 @@ int found_name(char name[], int line_count, char *db_name) {
   free(compare_name);
   return -1;
 }
-
