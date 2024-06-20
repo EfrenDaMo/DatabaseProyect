@@ -63,7 +63,9 @@ Some of these are just ideas and I'm unsure if they are currently possible with 
 
 - [`e99e775`](https://github.com/EfrenDaMo/DatabaseProyect/commit/e99e775d002bcd4daf0cfead9a47a9e9b9b611a0) Made changes to fix mistake is changelog in ReadMe
 
-- `Current` Added screen clearing every time a new operation is done
+- [`a2f4934`](https://github.com/EfrenDaMo/DatabaseProyect/commit/a2f493484de71248aa4265388a2bff847818b092) Added screen clearing every time a new operation is done
+
+- `Current` Change line reading from file to prevent stack overflow
 
 ### Thanks && other stuff
 

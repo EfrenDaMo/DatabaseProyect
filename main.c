@@ -4,6 +4,8 @@
 #include <stdlib.h> //* Memory managing and type exchange
 #include <string.h> //* String manipulation and managing
 
+#define MAX_LINE_LENGTH 70
+
 /*
 TODO:
 * Custom Fields
@@ -306,7 +308,7 @@ void append_new(int line_count, char *db_name) {
 // Reads and prints out all lines stored in the database
 void show_all(char *db_name) {
   // Variables
-  char line[70];
+  char line[MAX_LINE_LENGTH];
 
   FILE *database;
 
@@ -316,7 +318,7 @@ void show_all(char *db_name) {
   printf("\nDatabase name is: %s \n", db_name);
 
   printf("\nDatabase content: \n");
-  while (fgets(line, 70, database)) {
+  while (fgets(line, MAX_LINE_LENGTH, database)) {
     printf(" %s", line);
   }
 
@@ -432,14 +434,14 @@ void show_all_by_key(int key_value, char *db_name) {
   // Variables
   int line_counter = 0;
 
-  char line[70];
+  char line[MAX_LINE_LENGTH];
 
   FILE *database;
 
   // Functionality: Print all in line where key is
   database = fopen(db_name, "r");
 
-  while (fgets(line, 1000, database)) {
+  while (fgets(line, MAX_LINE_LENGTH, database)) {
     line_counter++;
     if (line_counter - 2 == key_value)
       printf("%s", line);
@@ -456,14 +458,14 @@ void show_username_by_key(int key_value, char *db_name) {
   int space_counter = 0;
   int current_index = 0;
 
-  char line[70];
+  char line[MAX_LINE_LENGTH];
   char character;
 
   FILE *database;
 
   database = fopen(db_name, "r");
 
-  while (fgets(line, 1000, database)) {
+  while (fgets(line, MAX_LINE_LENGTH, database)) {
     line_counter++;
     if (line_counter - 2 == key_value) {
       while (character != '\n') {
@@ -494,14 +496,14 @@ void show_username_and_password_by_key(int key_value, char *db_name) {
   int space_counter = 0;
   int current_index = 0;
 
-  char line[70];
+  char line[MAX_LINE_LENGTH];
   char character;
 
   FILE *database;
 
   database = fopen(db_name, "r");
 
-  while (fgets(line, 1000, database)) {
+  while (fgets(line, MAX_LINE_LENGTH, database)) {
     line_counter++;
     if (line_counter - 2 == key_value) {
       while (character != '\n') {
@@ -532,14 +534,14 @@ void show_password_by_key(int key_value, char *db_name) {
   int space_counter = 0;
   int current_index = 0;
 
-  char line[70];
+  char line[MAX_LINE_LENGTH];
   char character;
 
   FILE *database;
 
   database = fopen(db_name, "r");
 
-  while (fgets(line, 1000, database)) {
+  while (fgets(line, MAX_LINE_LENGTH, database)) {
     line_counter++;
 
     if (line_counter - 2 == key_value) {
@@ -643,7 +645,7 @@ int found_name(char name[], int line_count, char *db_name) {
   int compare_size = 1;
   int space_counter = 0;
 
-  char line[70];
+  char line[MAX_LINE_LENGTH];
   char character;
   char *compare_name = malloc(sizeof(char));
 
@@ -651,7 +653,7 @@ int found_name(char name[], int line_count, char *db_name) {
 
   database = fopen(db_name, "r");
 
-  while (fgets(line, 70, database) != NULL) {
+  while (fgets(line, MAX_LINE_LENGTH, database) != NULL) {
     if (line_counter + 1 == line_count)
       break;
     space_counter = 0;
