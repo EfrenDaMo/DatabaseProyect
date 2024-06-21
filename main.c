@@ -12,8 +12,7 @@ TODO:
 * Databases, tables and relations
 * Custom field searching
 *- Better CLI looks:
-*-  - Clear screen
-*   - Return to previous menus
+*-   - Return to previous menus
 *   - Run timer
 *   - Database selector
 */
@@ -70,7 +69,12 @@ int main(void) {
   if (db_name == NULL)
     return 0;
 
+  #ifdef _WIN32
   system("cls");
+  #elif __linux__
+  system("clear");
+  #endif
+
   printf("\nDatabase name is: %s \n", db_name);
 
   int lines_count = get_line_count(db_name);
@@ -87,7 +91,12 @@ int main(void) {
 char *get_database_name() {
   // Variables
   char select;
+
   char *db_name = malloc(30 * sizeof(char));
+  if(db_name == NULL) {
+    free(db_name);
+    return NULL;
+  }
 
   FILE *database;
 
@@ -96,12 +105,16 @@ char *get_database_name() {
   printf("\nIntroduce the name of the database: ");
   scanf("%s", db_name);
 
-  db_name = realloc(db_name, strlen(db_name) * sizeof(char));
+  db_name = realloc(db_name, (strlen(db_name) + 1) * sizeof(char));
+
+  if(db_name == NULL) {
+    free(db_name);
+    return NULL;
+  }
 
   database = fopen(db_name, "r");
 
   if (database == NULL) {
-    fclose(database);
     printf("This is file does not exist would you like to create it? \n");
     printf("(y)es (n)o: ");
     scanf(" %c", &select);
@@ -174,28 +187,53 @@ void main_menu(int line_count, char *db_name) {
 
   switch (selection) {
   case 1:
+    #ifdef _WIN32
     system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
     append_new(line_count, db_name);
     break;
 
   case 2:
+    #ifdef _WIN32
     system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
     show_all(db_name);
     break;
 
   case 3:
+    #ifdef _WIN32
     system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
     show_specific_menu(line_count, db_name);
     break;
 
   case 4:
+    #ifdef _WIN32
     system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
   	printf("\nDatabase name is: %s \n", db_name);
     printf("\nUnderstood closing system!\n");
     break;
 
   default:
+    #ifdef _WIN32
     system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
   	printf("\nDatabase name is: %s \n", db_name);
     printf("\nNot a valid option \n");
     break;
@@ -344,17 +382,32 @@ void show_specific_menu(int line_count, char *db_name) {
 
   switch (selection) {
   case 1:
+    #ifdef _WIN32
     system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
     show_specific_by_key_menu(line_count, db_name);
     break;
 
   case 2:
+    #ifdef _WIN32
     system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
     show_specific_by_username_menu(line_count, db_name);
     break;
 
   default:
+    #ifdef _WIN32
     system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
     printf("This is not a selectable field");
     break;
   }
@@ -392,35 +445,60 @@ void show_specific_by_key_menu(int line_count, char *db_name) {
 
   switch (selection) {
   case 1:
-	system("cls");
+	  #ifdef _WIN32
+    system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
   	printf("\nDatabase name is: %s \n", db_name);
     printf("\nAll: ");
     show_all_by_key(key_value, db_name);
     break;
 
   case 2:
-  	system("cls");
+  	#ifdef _WIN32
+    system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
   	printf("\nDatabase name is: %s \n", db_name);
     printf("\nName:");
     show_username_by_key(key_value, db_name);
     break;
 
   case 3:
-	system("cls");
+	  #ifdef _WIN32
+    system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
   	printf("\nDatabase name is: %s \n", db_name);
     printf("\nName & Password:");
     show_username_and_password_by_key(key_value, db_name);
     break;
 
   case 4:
-	system("cls");
+	  #ifdef _WIN32
+    system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
   	printf("\nDatabase name is: %s \n", db_name);
     printf("\nPassword:");
     show_password_by_key(key_value, db_name);
     break;
 
   default:
-  	system("cls");
+  	#ifdef _WIN32
+    system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
   	printf("\nDatabase name is: %s \n", db_name);
     printf("\nThis is not a showable field");
     break;
@@ -599,20 +677,35 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
 
   switch (selection) {
   case 1:
-  	system("cls");
+  	#ifdef _WIN32
+    system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
   	printf("\nDatabase name is: %s \n", db_name);
     printf("\nAll: ");
     show_all_by_key(found_name_key, db_name);
     break;
 
   case 2:
-  	system("cls");
+  	#ifdef _WIN32
+    system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
   	printf("\nDatabase name is: %s \n", db_name);
     printf("\nKey: %i\n", found_name_key);
     break;
 
   case 3:
-  	system("cls");
+  	#ifdef _WIN32
+    system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
   	printf("\nDatabase name is: %s \n", db_name);
     printf("\nKey & Password: %i,", found_name_key);
     show_password_by_key(found_name_key, db_name);
@@ -620,7 +713,12 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
     break;
 
   case 4:
-  	system("cls");
+  	#ifdef _WIN32
+    system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
   	printf("\nDatabase name is: %s \n", db_name);
     printf("\nPassword:");
     show_password_by_key(found_name_key, db_name);
@@ -628,7 +726,12 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
     break;
 
   default:
-  	system("cls");
+  	#ifdef _WIN32
+    system("cls");
+    #elif __linux__
+    system("clear");
+    #endif
+
   	printf("\nDatabase name is: %s \n", db_name);
     printf("\nNot a valid option \n");
     break;

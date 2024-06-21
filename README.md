@@ -65,7 +65,9 @@ Some of these are just ideas and I'm unsure if they are currently possible with 
 
 - [`a2f4934`](https://github.com/EfrenDaMo/DatabaseProyect/commit/a2f493484de71248aa4265388a2bff847818b092) Added screen clearing every time a new operation is done
 
-- `Current` Change line reading from file to prevent stack overflow
+- [`a83508d`](https://github.com/EfrenDaMo/DatabaseProyect/commit/a83508dfeeacaf1d3a7643c13ab71b2bed3c178f) Change line reading from file to prevent stack overflow
+
+- `Current` Fixed seg fault near the beginning of system, fixed screen, clearing to work on most systems
 
 ### Thanks && other stuff
 
