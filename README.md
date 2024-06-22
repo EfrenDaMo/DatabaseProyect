@@ -67,7 +67,9 @@ Some of these are just ideas and I'm unsure if they are currently possible with 
 
 - [`a83508d`](https://github.com/EfrenDaMo/DatabaseProyect/commit/a83508dfeeacaf1d3a7643c13ab71b2bed3c178f) Change line reading from file to prevent stack overflow
 
-- `Current` Fixed seg fault near the beginning of system, fixed screen, clearing to work on most systems
+- [`90c8501`](https://github.com/EfrenDaMo/DatabaseProyect/commit/90c8501e5e04315a42974a367dbe4f88a1dc6795) Fixed seg fault near the beginning of system, fixed screen clearing to work on most systems
+
+- `Current` Refactored to improve file handling and user prompts, added platform-specific includes for Windows and Linux.
 
 ### Thanks && other stuff
 
