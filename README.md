@@ -69,7 +69,9 @@ Some of these are just ideas and I'm unsure if they are currently possible with 
 
 - [`90c8501`](https://github.com/EfrenDaMo/DatabaseProyect/commit/90c8501e5e04315a42974a367dbe4f88a1dc6795) Fixed seg fault near the beginning of system, fixed screen clearing to work on most systems
 
-- `Current` Refactored to improve file handling and user prompts, added platform-specific includes for Windows and Linux.
+- [`69d0638`](https://github.com/EfrenDaMo/DatabaseProyect/commit/69d063820249ec7f932e84abcfa46011a46e4f0f) Refactored to improve file handling and user prompts, added platform-specific includes for Windows and Linux.
+
+- `Current` Implemented the return to all the previous menus
 
 ### Thanks && other stuff
 

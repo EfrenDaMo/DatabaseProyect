@@ -14,9 +14,9 @@ TODO:
 * Databases, tables and relations
 * Custom field searching
 *- Better CLI looks:
-*-   - Return to previous menus
-*   - Run timer
+*-   - Run timer
 *   - Database selector
+*   - Keep running
 */
 
 //* Prototypes
@@ -66,6 +66,8 @@ int found_name(char name[], int line_count, char *db_name);
 
 int main(void) {
   // Variables
+  char cont;
+
   char *db_name = get_database_name();
 
   if (db_name == NULL)
@@ -147,7 +149,8 @@ char *get_database_name() {
         break;
 
       case 'y':
-        printf("\nUnderstood file will be create and fields will be inserted \n");
+        printf(
+            "\nUnderstood file will be create and fields will be inserted \n");
 
         database = fopen(db_name, "w");
         fprintf(database, "Key, User, Password");
@@ -176,9 +179,9 @@ char *get_database_name() {
       fclose(database);
       valid_file = 1;
 #ifdef _WIN32
-        Sleep(5000);
+      Sleep(5000);
 #elif __linux__
-        sleep(5);
+      sleep(5);
 #endif
     }
   }
@@ -441,6 +444,22 @@ void show_specific_menu(int line_count, char *db_name) {
     show_specific_by_username_menu(line_count, db_name);
     break;
 
+  case 3:
+#ifdef _WIN32
+    system("cls");
+#elif __linux__
+    system("clear");
+#endif
+    printf("\nDatabase name is: %s \n", db_name);
+    printf("\nUnderstood returning to previous menu! \n");
+#ifdef _WIN32
+    Sleep(5000);
+#elif __linux__
+    sleep(5);
+#endif
+    main_menu(line_count, db_name);
+    break;
+
   default:
 #ifdef _WIN32
     system("cls");
@@ -471,17 +490,10 @@ void show_specific_by_key_menu(int line_count, char *db_name) {
   printf("\n 2.Username");
   printf("\n 3.Username & Password");
   printf("\n 4.Password");
+  printf("\n 5.Return to previous menu");
   printf("\n: ");
   scanf("%i", &selection);
   printf("\n");
-
-  printf("Key: ");
-  scanf("%i", &key_value);
-  printf("\n");
-  if (key_value > last_key_value || key_value < 0) {
-    printf("This is not a valid key!");
-    return;
-  }
 
   switch (selection) {
   case 1:
@@ -490,8 +502,16 @@ void show_specific_by_key_menu(int line_count, char *db_name) {
 #elif __linux__
     system("clear");
 #endif
-
     printf("\nDatabase name is: %s \n", db_name);
+
+    printf("Key: ");
+    scanf("%i", &key_value);
+    printf("\n");
+    if (key_value > last_key_value || key_value < 0) {
+      printf("This is not a valid key!");
+      return;
+    }
+
     printf("\nAll: ");
     show_all_by_key(key_value, db_name);
     break;
@@ -502,8 +522,16 @@ void show_specific_by_key_menu(int line_count, char *db_name) {
 #elif __linux__
     system("clear");
 #endif
-
     printf("\nDatabase name is: %s \n", db_name);
+
+    printf("Key: ");
+    scanf("%i", &key_value);
+    printf("\n");
+    if (key_value > last_key_value || key_value < 0) {
+      printf("This is not a valid key!");
+      return;
+    }
+
     printf("\nName:");
     show_username_by_key(key_value, db_name);
     break;
@@ -514,8 +542,16 @@ void show_specific_by_key_menu(int line_count, char *db_name) {
 #elif __linux__
     system("clear");
 #endif
-
     printf("\nDatabase name is: %s \n", db_name);
+
+    printf("Key: ");
+    scanf("%i", &key_value);
+    printf("\n");
+    if (key_value > last_key_value || key_value < 0) {
+      printf("This is not a valid key!");
+      return;
+    }
+
     printf("\nName & Password:");
     show_username_and_password_by_key(key_value, db_name);
     break;
@@ -526,10 +562,34 @@ void show_specific_by_key_menu(int line_count, char *db_name) {
 #elif __linux__
     system("clear");
 #endif
-
     printf("\nDatabase name is: %s \n", db_name);
+
+    printf("Key: ");
+    scanf("%i", &key_value);
+    printf("\n");
+    if (key_value > last_key_value || key_value < 0) {
+      printf("This is not a valid key!");
+      return;
+    }
+
     printf("\nPassword:");
     show_password_by_key(key_value, db_name);
+    break;
+
+  case 5:
+#ifdef _WIN32
+    system("cls");
+#elif __linux__
+    system("clear");
+#endif
+    printf("\nDatabase name is: %s \n", db_name);
+    printf("\nUnderstood returning to previous menu! \n");
+#ifdef _WIN32
+    Sleep(5000);
+#elif __linux__
+    sleep(5);
+#endif
+    show_specific_menu(line_count, db_name);
     break;
 
   default:
@@ -683,10 +743,13 @@ void show_password_by_key(int key_value, char *db_name) {
   return;
 }
 
+int read_name(int line_count, char *db_name) {}
 // Opens a menu to select fields based on the username of the register
 void show_specific_by_username_menu(int line_count, char *db_name) {
   // Variables
   int selection;
+
+  int found_name_key;
 
   char *username = malloc(30 * sizeof(char));
 
@@ -698,22 +761,10 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
   printf("\n 2.Key");
   printf("\n 3.key & Password");
   printf("\n 4.Password");
+  printf("\n 5.Return to previous menu");
   printf("\n: ");
   scanf("%i", &selection);
   printf("\n");
-
-  printf("\n");
-  printf("Introduce the name to search for: ");
-  scanf("%s", username);
-
-  username = realloc(username, (strlen(username) + 1) * sizeof(char));
-
-  int found_name_key = found_name(username, line_count, db_name);
-
-  if (found_name_key == -1) {
-    printf("\nName %s was not found\n", username);
-    return;
-  }
 
   switch (selection) {
   case 1:
@@ -722,8 +773,21 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
 #elif __linux__
     system("clear");
 #endif
-
     printf("\nDatabase name is: %s \n", db_name);
+
+    printf("\n");
+    printf("Introduce the name to search for: ");
+    scanf("%s", username);
+
+    username = realloc(username, (strlen(username) + 1) * sizeof(char));
+
+    found_name_key = found_name(username, line_count, db_name);
+
+    if (found_name_key == -1) {
+      printf("\nName %s was not found\n", username);
+      return;
+    }
+
     printf("\nAll: ");
     show_all_by_key(found_name_key, db_name);
     break;
@@ -734,8 +798,21 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
 #elif __linux__
     system("clear");
 #endif
-
     printf("\nDatabase name is: %s \n", db_name);
+
+    printf("\n");
+    printf("Introduce the name to search for: ");
+    scanf("%s", username);
+
+    username = realloc(username, (strlen(username) + 1) * sizeof(char));
+
+    found_name_key = found_name(username, line_count, db_name);
+
+    if (found_name_key == -1) {
+      printf("\nName %s was not found\n", username);
+      return;
+    }
+
     printf("\nKey: %i\n", found_name_key);
     break;
 
@@ -745,8 +822,21 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
 #elif __linux__
     system("clear");
 #endif
-
     printf("\nDatabase name is: %s \n", db_name);
+
+    printf("\n");
+    printf("Introduce the name to search for: ");
+    scanf("%s", username);
+
+    username = realloc(username, (strlen(username) + 1) * sizeof(char));
+
+    found_name_key = found_name(username, line_count, db_name);
+
+    if (found_name_key == -1) {
+      printf("\nName %s was not found\n", username);
+      return;
+    }
+
     printf("\nKey & Password: %i,", found_name_key);
     show_password_by_key(found_name_key, db_name);
     printf("\n");
@@ -758,11 +848,40 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
 #elif __linux__
     system("clear");
 #endif
-
     printf("\nDatabase name is: %s \n", db_name);
+
+    printf("\n");
+    printf("Introduce the name to search for: ");
+    scanf("%s", username);
+
+    username = realloc(username, (strlen(username) + 1) * sizeof(char));
+
+    found_name_key = found_name(username, line_count, db_name);
+
+    if (found_name_key == -1) {
+      printf("\nName %s was not found\n", username);
+      return;
+    }
+
     printf("\nPassword:");
     show_password_by_key(found_name_key, db_name);
     printf("\n");
+    break;
+
+  case 5:
+#ifdef _WIN32
+    system("cls");
+#elif __linux__
+    system("clear");
+#endif
+    printf("\nDatabase name is: %s \n", db_name);
+    printf("\nUnderstood returning to previous menu! \n");
+#ifdef _WIN32
+    Sleep(5000);
+#elif __linux__
+    sleep(5);
+#endif
+    show_specific_menu(line_count, db_name);
     break;
 
   default:
@@ -771,7 +890,6 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
 #elif __linux__
     system("clear");
 #endif
-
     printf("\nDatabase name is: %s \n", db_name);
     printf("\nNot a valid option \n");
     break;
