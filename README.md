@@ -71,7 +71,9 @@ Some of these are just ideas and I'm unsure if they are currently possible with 
 
 - [`69d0638`](https://github.com/EfrenDaMo/DatabaseProyect/commit/69d063820249ec7f932e84abcfa46011a46e4f0f) Refactored to improve file handling and user prompts, added platform-specific includes for Windows and Linux.
 
-- `Current` Implemented the return to all the previous menus
+- [`c198fa2`](https://github.com/EfrenDaMo/DatabaseProyect/commit/c198fa285fb8eb563dfc334b326e225c370b6268) Implemented the return to all the previous menus
+
+- `Current`  Makes it so the that the system keeps looping till user quits, moved input reading to functions to make it easier
 
 ### Thanks && other stuff
 
