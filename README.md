@@ -73,7 +73,9 @@ Some of these are just ideas and I'm unsure if they are currently possible with 
 
 - [`c198fa2`](https://github.com/EfrenDaMo/DatabaseProyect/commit/c198fa285fb8eb563dfc334b326e225c370b6268) Implemented the return to all the previous menus
 
-- `Current`  Makes it so the that the system keeps looping till user quits, moved input reading to functions to make it easier
+- [`d98ccf7`](https://github.com/EfrenDaMo/DatabaseProyect/commit/d98ccf716b7089b499f4bc5c5e974cf503adba61)  Makes it so the that the system keeps looping till user quits, moved input reading to functions to make it easier
+
+- `Current` Added timer to all lookup functions, to measure lookup time; Updated .gitignore
 
 ### Thanks && other stuff
 

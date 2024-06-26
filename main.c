@@ -3,6 +3,7 @@
 #include <ctype.h>   //* Type detection
 #include <stdlib.h>  //* Memory managing and type exchange
 #include <string.h>  //* String manipulation and managing
+#include <time.h>    //* Time mangement and handeling 
 #ifdef _WIN32
     #include <windows.h> //* Windows functions
 #elif __linux__
@@ -17,7 +18,6 @@ TODO:
 * Databases, tables and relations
 * Custom field searching
 *- Better CLI looks:
-*   - Run timer
 *   - Database selector
 */
 
@@ -410,9 +410,14 @@ void show_all(char *db_name) {
   // Variables
   char line[MAX_LINE_LENGTH];
 
+  time_t start, end;
+
+  float t;
+
   FILE *database;
 
   // Functionality: Read all the contents of DB
+  start = clock();
   database = fopen(db_name, "r");
 
   printf("\nDatabase name is: %s \n", db_name);
@@ -424,6 +429,11 @@ void show_all(char *db_name) {
   printf("\n");
 
   fclose(database);
+  end = clock();
+
+  t = (float) (end - start) / (float) CLOCKS_PER_SEC;
+
+  printf("\nTime elapsed: %.3fs\n", t);
   return;
 }
 
@@ -645,11 +655,16 @@ void show_all_by_key(int key_value, char *db_name) {
   // Variables
   int line_counter = 0;
 
+  float t;
+
   char line[MAX_LINE_LENGTH];
+
+  time_t start, end;
 
   FILE *database;
 
   // Functionality: Print all in line where key is
+  start = clock();
   database = fopen(db_name, "r");
 
   while (fgets(line, MAX_LINE_LENGTH, database)) {
@@ -659,6 +674,11 @@ void show_all_by_key(int key_value, char *db_name) {
   }
 
   fclose(database);
+  end = clock();
+
+  t = (float) (end - start) / (float) CLOCKS_PER_SEC;
+
+  printf("\nTime elapsed: %.3fs \n", t);
   return;
 }
 
@@ -669,11 +689,16 @@ void show_username_by_key(int key_value, char *db_name) {
   int space_counter = 0;
   int current_index = 0;
 
+  float t;
+
   char line[MAX_LINE_LENGTH];
   char character;
 
+  time_t start, end;
+
   FILE *database;
 
+  start = clock();
   database = fopen(db_name, "r");
 
   while (fgets(line, MAX_LINE_LENGTH, database)) {
@@ -695,8 +720,14 @@ void show_username_by_key(int key_value, char *db_name) {
       }
     }
   }
+  printf("\n");
 
   fclose(database);
+  end = clock();
+
+  t = (float) (end - start) / (float) CLOCKS_PER_SEC;
+
+  printf("\nTime elapsed: %.3fs\n", t);
   return;
 }
 
@@ -707,11 +738,16 @@ void show_username_and_password_by_key(int key_value, char *db_name) {
   int space_counter = 0;
   int current_index = 0;
 
+  float t;
+
   char line[MAX_LINE_LENGTH];
   char character;
 
+  time_t start, end;
+
   FILE *database;
 
+  start = clock();
   database = fopen(db_name, "r");
 
   while (fgets(line, MAX_LINE_LENGTH, database)) {
@@ -733,8 +769,14 @@ void show_username_and_password_by_key(int key_value, char *db_name) {
       }
     }
   }
+  printf("\n");
 
   fclose(database);
+  end = clock();
+
+  t = (float) (end - start) / (float) CLOCKS_PER_SEC;
+
+  printf("\nTime elapsed: %.3fs\n", t);
   return;
 }
 
@@ -745,11 +787,16 @@ void show_password_by_key(int key_value, char *db_name) {
   int space_counter = 0;
   int current_index = 0;
 
+  float t;
+
   char line[MAX_LINE_LENGTH];
   char character;
 
+  time_t start, end;
+
   FILE *database;
 
+  start = clock();
   database = fopen(db_name, "r");
 
   while (fgets(line, MAX_LINE_LENGTH, database)) {
@@ -771,8 +818,14 @@ void show_password_by_key(int key_value, char *db_name) {
       }
     }
   }
+  printf("\n");
 
   fclose(database);
+  end = clock();
+
+  t = (float) (end - start) / (float) CLOCKS_PER_SEC;
+
+  printf("\nTime elapsed: %.3fs\n", t);
   return;
 }
 
@@ -802,8 +855,11 @@ int read_name(int line_count, char *db_name) {
 void show_specific_by_username_menu(int line_count, char *db_name) {
   // Variables
   int selection;
-
   int found_name_key;
+
+  float t;
+
+  time_t start, end;
 
   // Functionality: Specific search by username
   printf("\nDatabase name is: %s \n", db_name);
@@ -843,6 +899,7 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
 #elif __linux__
     system("clear");
 #endif
+    start = clock();
     printf("\nDatabase name is: %s \n", db_name);
 
     found_name_key = read_name(line_count, db_name); 
@@ -850,8 +907,13 @@ void show_specific_by_username_menu(int line_count, char *db_name) {
     if (found_name_key == -1) {
       return;
     }
+    end = clock();
 
     printf("\nKey: %i\n", found_name_key);
+
+    t = (float) (end - start) / (float) CLOCKS_PER_SEC;
+
+    printf("\nTime elapsed: %.3fs\n", t);
     break;
 
   case 3:
